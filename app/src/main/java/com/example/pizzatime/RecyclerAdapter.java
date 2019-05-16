@@ -1,6 +1,7 @@
 package com.example.pizzatime;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,12 +14,14 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private ArrayList<ListItem> listItems;
+    private Cursor databaseOutput;
     private Context context;
 
-    public RecyclerAdapter(ProductActivity productActivity) {
+    public RecyclerAdapter(ProductActivity productActivity, Cursor database) {
         listItems = new ArrayList<ListItem>();
         listItems.add(new ListItem("test"));
         listItems.add(new ListItem("test2"));
+        databaseOutput = database;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -30,9 +33,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ListItem listItem = listItems.get(i);
+        //ListItem listItem = listItems.get(i);
 
-        viewHolder.textView2.setText(listItem.getWhatever());
+        //viewHolder.descView.setText(listItem.getWhatever());
+        databaseOutput.moveToPosition(i);
+        viewHolder.descView.setText(databaseOutput.getString(databaseOutput.getColumnIndex("name")));
+        viewHolder.priceView.setText(String.valueOf(databaseOutput.getFloat(databaseOutput.getColumnIndex("price"))));
     }
 
     @Override
@@ -41,12 +47,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView textView2;
+        public TextView descView;
+        public TextView priceView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textView2 = (TextView) itemView.findViewById(R.id.textView2);
+            descView = (TextView) itemView.findViewById(R.id.descView);
+            priceView = (TextView) itemView.findViewById(R.id.priceView);
 
         }
     }
