@@ -11,55 +11,55 @@
 
 
     <ImageView
-        android:id="@+id/img1"
-        android:layout_width="199dp"
-        android:layout_height="285dp"
+        android:id="@+id/pizza"
+        android:layout_width="181dp"
+        android:layout_height="246dp"
         android:layout_marginTop="88dp"
+        android:src="@drawable/pizza"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/pizza"  />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img2"
-        android:layout_width="208dp"
-        android:layout_height="285dp"
+        android:id="@+id/extra"
+        android:layout_width="181dp"
+        android:layout_height="246dp"
         android:layout_marginTop="88dp"
-        app:layout_constraintStart_toEndOf="@+id/img1"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/pizza" />
+        android:src="@drawable/pizza"
+        app:layout_constraintStart_toEndOf="@+id/pizza"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img3"
-        android:layout_width="204dp"
-        android:layout_height="285dp"
+        android:id="@+id/menu"
+        android:layout_width="181dp"
+        android:layout_height="246dp"
+        android:src="@drawable/pizza"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img1"
-        android:src="@drawable/pizza"  />
+        app:layout_constraintTop_toBottomOf="@+id/pizza" />
 
     <ImageView
-        android:id="@+id/img4"
-        android:layout_width="204dp"
-        android:layout_height="285dp"
-        app:layout_constraintStart_toEndOf="@+id/img3"
-        app:layout_constraintTop_toBottomOf="@+id/img2"
-        android:src="@drawable/pizza"  />
+        android:id="@+id/korting"
+        android:layout_width="181dp"
+        android:layout_height="246dp"
+        android:src="@drawable/pizza"
+        app:layout_constraintStart_toEndOf="@+id/menu"
+        app:layout_constraintTop_toBottomOf="@+id/extra" />
 
     <ImageView
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="88dp"
+        android:src="@drawable/banner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/banner" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/cart"
         android:layout_width="43dp"
         android:layout_height="39dp"
-        android:layout_marginStart="336dp"
-        android:layout_marginLeft="336dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginLeft="284dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/ic_shopping_cart_black_24dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/banner"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
