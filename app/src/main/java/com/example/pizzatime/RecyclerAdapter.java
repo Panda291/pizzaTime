@@ -16,12 +16,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<ListItem> listItems;
     private Cursor databaseOutput;
     private Context context;
+    final private ListItemClickListener mOnClickListener;
 
-    public RecyclerAdapter(ProductActivity productActivity, Cursor database) {
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
+    }
+
+    public RecyclerAdapter(ProductActivity productActivity, Cursor database, ListItemClickListener listener) {
         listItems = new ArrayList<ListItem>();
         listItems.add(new ListItem("test"));
         listItems.add(new ListItem("test2"));
         databaseOutput = database;
+        mOnClickListener = listener;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -38,7 +44,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //viewHolder.descView.setText(listItem.getWhatever());
         databaseOutput.moveToPosition(i);
         viewHolder.descView.setText(databaseOutput.getString(databaseOutput.getColumnIndex("name")));
-        viewHolder.priceView.setText(String.valueOf(databaseOutput.getFloat(databaseOutput.getColumnIndex("price"))));
+        viewHolder.priceView.setText("€ " + String.valueOf(databaseOutput.getFloat(databaseOutput.getColumnIndex("price"))));
     }
 
     @Override
@@ -46,7 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return listItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView descView;
         public TextView priceView;
 
@@ -56,6 +62,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             descView = (TextView) itemView.findViewById(R.id.descView);
             priceView = (TextView) itemView.findViewById(R.id.priceView);
 
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
         }
     }
 }

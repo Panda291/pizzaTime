@@ -9,24 +9,38 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends AppCompatActivity implements RecyclerAdapter.ListItemClickListener{
+
+    private String action;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         Intent data = getIntent();
         TextView textField = findViewById(R.id.ProductName);
-        textField.setText(data.getStringExtra("EXTRA_TEXT"));
+        action = data.getStringExtra("EXTRA_TEXT");
+        textField.setText(action);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-        Cursor databaseOutput = db.rawQuery("select * from pizza", null);
+        Cursor databaseOutput = db.rawQuery("select * from " + action, null);
 
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, databaseOutput);
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, databaseOutput, this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void onListItemClick(int clickedItemIndex)
+    {
+        Intent intent = new Intent(ProductActivity.this, SpecificActivity.class);
+        intent.putExtra("EXTRA_TEXT", action);
+        intent.putExtra("EXTRA_ID", clickedItemIndex+1);
+        startActivity(intent);
     }
 }
