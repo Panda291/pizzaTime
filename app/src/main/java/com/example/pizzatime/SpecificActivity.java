@@ -16,7 +16,7 @@ public class SpecificActivity extends AppCompatActivity {
 
         Intent data = getIntent();
         String action = data.getStringExtra("EXTRA_TEXT");
-        int id = data.getIntExtra("EXTRA_ID", 0);
+        int id = data.getIntExtra("EXTRA_ID", 1);
         TextView desc = (TextView) findViewById(R.id.specificDesc);
         TextView price = (TextView) findViewById(R.id.specificPrice);
 

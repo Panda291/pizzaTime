@@ -12,6 +12,8 @@ import android.widget.TextView;
 public class ProductActivity extends AppCompatActivity implements RecyclerAdapter.ListItemClickListener{
 
     private String action;
+    private RecyclerAdapter recyclerAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,8 @@ public class ProductActivity extends AppCompatActivity implements RecyclerAdapte
 //            Log.e("wot", databaseOutput.getString(databaseOutput.getColumnIndex("name")));
 //        }
 
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, databaseOutput, this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerAdapter = new RecyclerAdapter(this, databaseOutput, this);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(layoutManager);
     }
@@ -45,7 +47,8 @@ public class ProductActivity extends AppCompatActivity implements RecyclerAdapte
     {
         Intent intent = new Intent(ProductActivity.this, SpecificActivity.class);
         intent.putExtra("EXTRA_TEXT", action);
-        intent.putExtra("EXTRA_ID", clickedItemIndex+1);
+        TextView IdView = recyclerView.findViewHolderForAdapterPosition(clickedItemIndex).itemView.findViewById(R.id.IdView);
+        intent.putExtra("EXTRA_ID", Integer.parseInt(IdView.getText().toString()));
         startActivity(intent);
     }
 }

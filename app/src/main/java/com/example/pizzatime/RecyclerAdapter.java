@@ -23,9 +23,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     public RecyclerAdapter(ProductActivity productActivity, Cursor database, ListItemClickListener listener) {
-        listItems = new ArrayList<ListItem>();
-        listItems.add(new ListItem("test"));
-        listItems.add(new ListItem("test2"));
         databaseOutput = database;
         mOnClickListener = listener;
     }
@@ -45,6 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         databaseOutput.moveToPosition(i);
         viewHolder.descView.setText(databaseOutput.getString(databaseOutput.getColumnIndex("name")));
         viewHolder.priceView.setText("€ " + String.valueOf(databaseOutput.getFloat(databaseOutput.getColumnIndex("price"))));
+        viewHolder.IdView.setText(String.valueOf(databaseOutput.getInt(databaseOutput.getColumnIndex("id"))));
     }
 
     @Override
@@ -53,14 +51,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView descView;
-        public TextView priceView;
+        TextView descView;
+        TextView priceView;
+        TextView IdView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             descView = (TextView) itemView.findViewById(R.id.descView);
             priceView = (TextView) itemView.findViewById(R.id.priceView);
+            IdView = (TextView) itemView.findViewById(R.id.IdView);
 
             itemView.setOnClickListener(this);
         }
