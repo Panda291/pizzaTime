@@ -29,6 +29,11 @@ public class ProductActivity extends AppCompatActivity implements RecyclerAdapte
 
         Cursor databaseOutput = db.rawQuery("select * from " + action, null);
 
+//        while(databaseOutput.moveToNext())
+//        {
+//            Log.e("wot", databaseOutput.getString(databaseOutput.getColumnIndex("name")));
+//        }
+
         RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this, databaseOutput, this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(recyclerAdapter);

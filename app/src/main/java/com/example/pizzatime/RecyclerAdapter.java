@@ -49,7 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return listItems.size();
+        return databaseOutput.getCount();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
