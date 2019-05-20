@@ -1,6 +1,8 @@
 package com.example.pizzatime;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,18 +10,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SpecificActivity extends AppCompatActivity {
 
+    String action;
+    int id;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific);
         Intent data = getIntent();
-        String action = data.getStringExtra("EXTRA_TEXT");
-        int id = data.getIntExtra("EXTRA_ID", 1);
+        action = data.getStringExtra("EXTRA_TEXT");
+
+        Button addButton = findViewById(R.id.addButton);
+
+        id = data.getIntExtra("EXTRA_ID", 1);
         TextView desc = (TextView) findViewById(R.id.specificDesc);
         TextView price = (TextView) findViewById(R.id.specificPrice);
         TextView pizza = (TextView) findViewById(R.id.specificPizzaView);
@@ -27,8 +36,9 @@ public class SpecificActivity extends AppCompatActivity {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor output;
         if (action.equals("pizza") || action.equals("extra")) {
-            Cursor output = db.rawQuery("select c.name, c.price from " + action + " c where c.id = '" + id + "'", null);
+            output = db.rawQuery("select c.name, c.price from " + action + " c where c.id = '" + id + "'", null);
 
             output.moveToPosition(0);
 
@@ -39,7 +49,7 @@ public class SpecificActivity extends AppCompatActivity {
             output.close();
         }
         else if (action.equals("menu")) {
-            Cursor output = db.rawQuery("select c.name, c.price, c.pid, c.eid from menu c where c.id = '" + id + "'", null);
+            output = db.rawQuery("select c.name, c.price, c.pid, c.eid from menu c where c.id = '" + id + "'", null);
 
             output.moveToPosition(0);
 
@@ -62,7 +72,7 @@ public class SpecificActivity extends AppCompatActivity {
         }
         else if (action.equals("discount"))
         {
-            Cursor output = db.rawQuery("select d.name, d.price, d.pid from discount d where d.id = '" + id + "'", null);
+            output = db.rawQuery("select d.name, d.price, d.pid from discount d where d.id = '" + id + "'", null);
 
             output.moveToPosition(0);
 
@@ -79,5 +89,29 @@ public class SpecificActivity extends AppCompatActivity {
 
             extra.setText("");
         }
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToCart();
+            }
+        });
+    }
+
+    void addToCart()
+    {
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("type", action);
+        values.put("fid", id);
+        db.insert("cart", null, values);
+
+        Context context = getApplicationContext();
+        CharSequence text = values.toString();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

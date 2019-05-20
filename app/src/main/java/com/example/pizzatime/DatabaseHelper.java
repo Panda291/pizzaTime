@@ -23,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE extra(id INTEGER PRIMARY KEY, name TEXT, price REAL)");
         db.execSQL("CREATE TABLE menu(id INTEGER PRIMARY KEY, pid INTEGER, eid INTEGER, name TEXT, price REAL)");
         db.execSQL("CREATE TABLE discount(id INTEGER PRIMARY KEY, pid INTEGER, price REAL, name TEXT)");
+        db.execSQL("CREATE TABLE cart(id INTEGER PRIMARY KEY, type TEXT, fid INTEGER)");
 
         ContentValues values = new ContentValues();
         values.put("name", "pizza margharita");
