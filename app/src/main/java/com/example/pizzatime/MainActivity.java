@@ -2,6 +2,7 @@ package com.example.pizzatime;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView extra = (ImageView) findViewById(R.id.extra);
         ImageView menu = (ImageView) findViewById(R.id.menu);
         ImageView discount = (ImageView) findViewById(R.id.discount);
+        ImageView cart = (ImageView) findViewById(R.id.cart);
         pizza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+                intent.putExtra("EXTRA_TEXT", "cart");
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

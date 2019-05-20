@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +18,9 @@ import android.widget.Toast;
 public class SpecificActivity extends AppCompatActivity {
 
     String action;
+    String action2;
     int id;
+    int id2;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +28,12 @@ public class SpecificActivity extends AppCompatActivity {
         setContentView(R.layout.activity_specific);
         Intent data = getIntent();
         action = data.getStringExtra("EXTRA_TEXT");
+        action2 = data.getStringExtra("EXTRA_ACTION");
 
         Button addButton = findViewById(R.id.addButton);
 
         id = data.getIntExtra("EXTRA_ID", 1);
+        id2 = data.getIntExtra("EXTRA_ID2", 0);
         TextView desc = (TextView) findViewById(R.id.specificDesc);
         TextView price = (TextView) findViewById(R.id.specificPrice);
         TextView pizza = (TextView) findViewById(R.id.specificPizzaView);
@@ -89,13 +94,24 @@ public class SpecificActivity extends AppCompatActivity {
 
             extra.setText("");
         }
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToCart();
-            }
-        });
+        if (action2.equals("remove"))
+        {
+            addButton.setText("Remove from cart");
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeFromCart();
+                }
+            });
+        }
+        else {
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addToCart();
+                }
+            });
+        }
     }
 
     void addToCart()
@@ -108,10 +124,29 @@ public class SpecificActivity extends AppCompatActivity {
         db.insert("cart", null, values);
 
         Context context = getApplicationContext();
-        CharSequence text = values.toString();
+        CharSequence text = "added to cart";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+        finish();
+    }
+    void removeFromCart(){
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        db.delete("cart", "id = '" + id2 + "'", null);
+//        Log.e("removeFromCart", idk.toString());
+
+        Context context = getApplicationContext();
+        CharSequence text = "item removed";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        Intent resultIntent = new Intent();
+        setResult(RESULT_OK, resultIntent);
+
+        finish();
     }
 }
