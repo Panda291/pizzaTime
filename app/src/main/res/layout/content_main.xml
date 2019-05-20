@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pizza" />
 
     <ImageView
-        android:id="@+id/korting"
+        android:id="@+id/discount"
         android:layout_width="181dp"
         android:layout_height="246dp"
         android:src="@drawable/pizza"

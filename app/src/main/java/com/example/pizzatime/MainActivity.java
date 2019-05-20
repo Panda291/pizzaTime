@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView pizza = (ImageView) findViewById(R.id.pizza);
         ImageView extra = (ImageView) findViewById(R.id.extra);
         ImageView menu = (ImageView) findViewById(R.id.menu);
+        ImageView discount = (ImageView) findViewById(R.id.discount);
         pizza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("EXTRA_TEXT", "menu");
+                startActivity(intent);
+            }
+        });
+        discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+                intent.putExtra("EXTRA_TEXT", "discount");
                 startActivity(intent);
             }
         });

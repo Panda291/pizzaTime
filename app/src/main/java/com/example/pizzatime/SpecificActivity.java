@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 public class SpecificActivity extends AppCompatActivity {
@@ -15,7 +17,6 @@ public class SpecificActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific);
-
         Intent data = getIntent();
         String action = data.getStringExtra("EXTRA_TEXT");
         int id = data.getIntExtra("EXTRA_ID", 1);
@@ -33,6 +34,8 @@ public class SpecificActivity extends AppCompatActivity {
 
             desc.setText(output.getString(output.getColumnIndex("name")));
             price.setText("€" + String.valueOf(output.getString(output.getColumnIndex("price"))));
+            pizza.setText("");
+            extra.setText("");
             output.close();
         }
         else if (action.equals("menu")) {
@@ -56,6 +59,25 @@ public class SpecificActivity extends AppCompatActivity {
             output.moveToPosition(0);
             extra.setText(output.getString(output.getColumnIndex("name")));
             output.close();
+        }
+        else if (action.equals("discount"))
+        {
+            Cursor output = db.rawQuery("select d.name, d.price, d.pid from discount d where d.id = '" + id + "'", null);
+
+            output.moveToPosition(0);
+
+            desc.setText(output.getString(output.getColumnIndex("name")));
+            int pid = output.getInt(output.getColumnIndex("pid"));
+            price.setText("€" + String.valueOf(output.getString(output.getColumnIndex("price"))));
+
+            output.close();
+
+            output = db.rawQuery("select p.name from pizza p where p.id = '" + pid + "'", null);
+            output.moveToPosition(0);
+            pizza.setText(output.getString(output.getColumnIndex("name")));
+            output.close();
+
+            extra.setText("");
         }
     }
 }
