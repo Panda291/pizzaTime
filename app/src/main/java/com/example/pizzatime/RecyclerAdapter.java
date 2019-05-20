@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        //ListItem listItem = listItems.get(i);
-
-        //viewHolder.descView.setText(listItem.getWhatever());
+        //Log.e("onbind", String.valueOf(i));
         databaseOutput.moveToPosition(i);
         viewHolder.descView.setText(databaseOutput.getString(databaseOutput.getColumnIndex("name")));
         viewHolder.priceView.setText("€ " + String.valueOf(databaseOutput.getFloat(databaseOutput.getColumnIndex("price"))));
@@ -47,7 +46,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
+//        Log.e("getItemCount", String.valueOf(databaseOutput.getCount()));
         return databaseOutput.getCount();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
