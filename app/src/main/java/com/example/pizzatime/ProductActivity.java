@@ -1,5 +1,6 @@
 package com.example.pizzatime;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,11 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ProductActivity extends AppCompatActivity implements RecyclerAdapter.ListItemClickListener{
 
     private String action;
+    private String action2;
     private RecyclerAdapter recyclerAdapter;
     private RecyclerView recyclerView;
 
@@ -25,13 +29,15 @@ public class ProductActivity extends AppCompatActivity implements RecyclerAdapte
         setContentView(R.layout.activity_product);
         Intent data = getIntent();
         TextView textField = findViewById(R.id.ProductName);
+        Button checkoutButton = findViewById(R.id.checkoutButton);
         action = data.getStringExtra("EXTRA_TEXT");
+        action2 = data.getStringExtra("EXTRA_ACTION");
         textField.setText(action);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        final SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
         Cursor databaseOutput;
         if (action.equals("cart"))
@@ -51,6 +57,29 @@ public class ProductActivity extends AppCompatActivity implements RecyclerAdapte
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(layoutManager);
+
+
+        if (action2.equals("cart"))
+        {
+            checkoutButton.setVisibility(View.VISIBLE);
+            checkoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    db.delete("cart", "", null);
+                    Context context = getApplicationContext();
+                    CharSequence text = "order placed";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    finish();
+                }
+            });
+        }
+        else
+        {
+            checkoutButton.setVisibility(View.GONE);
+        }
     }
 
     @Override

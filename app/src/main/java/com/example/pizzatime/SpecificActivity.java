@@ -135,7 +135,6 @@ public class SpecificActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         db.delete("cart", "id = '" + id2 + "'", null);
-//        Log.e("removeFromCart", idk.toString());
 
         Context context = getApplicationContext();
         CharSequence text = "item removed";

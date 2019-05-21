@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("EXTRA_TEXT", "pizza");
+                intent.putExtra("EXTRA_ACTION", "");
                 startActivity(intent);
             }
         });
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("EXTRA_TEXT", "extra");
+                intent.putExtra("EXTRA_ACTION", "");
                 startActivity(intent);
             }
         });
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("EXTRA_TEXT", "menu");
+                intent.putExtra("EXTRA_ACTION", "");
                 startActivity(intent);
             }
         });
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("EXTRA_TEXT", "discount");
+                intent.putExtra("EXTRA_ACTION", "");
                 startActivity(intent);
             }
         });
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("EXTRA_TEXT", "cart");
+                intent.putExtra("EXTRA_ACTION", "cart");
                 startActivity(intent);
             }
         });
